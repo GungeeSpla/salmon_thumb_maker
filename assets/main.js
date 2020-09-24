@@ -104,6 +104,8 @@ window.onload = function() {
 				var result = parse_script(script);
 				$script.html(result.highlighted_html);
 				update_canvas_with_script_all();
+				edit_scripts[current_script_index] = script;
+				save();
 			}
 		});
 		for (var i = 0; i < default_scripts.length; i++) {
