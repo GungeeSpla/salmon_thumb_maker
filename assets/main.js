@@ -10,6 +10,7 @@ var last_detail_schedule_num;
 var current_schedule_index;
 var download_canvas = document.createElement('canvas');
 var storage_key = 'salmon_thumb_maker';
+var storage_key_ = 'salmon_thumb_maker_select';
 var edit_scripts = [];
 
 /** select_script(i)
@@ -28,6 +29,7 @@ function select_script(i) {
 	var script = current_scripts[i];
 	var result = parse_script(script);
 	$script.html(result.highlighted_html);
+	localStorage.setItem('salmon_thumb_maker_select', JSON.stringify(current_script_index));
 }
 
 /** save
@@ -43,6 +45,9 @@ function load() {
 	if (str) {
 		var obj = JSON.parse(str);
 		edit_scripts = obj;
+	}
+	if (localStorage.getItem('salmon_thumb_maker_select')) {
+		current_script_index = parseInt(localStorage.getItem('salmon_thumb_maker_select'));
 	}
 }
 
@@ -108,7 +113,7 @@ window.onload = function() {
 			var canvas = add_canvas(script, i);
 			canvases.push(canvas);
 		}
-		select_script(0);
+		select_script(current_script_index);
 		var $script = $('#script');
 		var timer_id;
 		$script.on('input', function() {
