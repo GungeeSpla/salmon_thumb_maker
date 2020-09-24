@@ -111,6 +111,7 @@ td:nth-child(3) {
 }
 #rotation-wrapper {
     text-align: center;
+    margin-top: 10px;
 }
 	#rotation-wrapper input {
 		height: 34px;
