@@ -1,0 +1,316 @@
+@font-face {
+	font-family: Splatoon1;
+	src:
+		url('./woff/s1kanji.woff2') format('woff2'),
+		url('./woff/s1kanji.woff') format('woff');
+}
+@font-face {
+	font-family: Splatoon1;
+	src:
+		url('./woff/s1kana.woff2') format('woff2'),
+		url('./woff/s1kana.woff') format('woff');
+}
+@font-face {
+	font-family: Splatoon2;
+	src:
+		url('./woff/s2kanji.woff2') format('woff2'),
+		url('./woff/s2kanji.woff') format('woff');
+}
+@font-face {
+	font-family: Splatoon2;
+	src:
+		url('./woff/s2kana.woff2') format('woff2'),
+		url('./woff/s2kana.woff') format('woff');
+}
+body, div, p, table, tr, th, td, ul, ol, li, h1, h2, h3, h4, h5 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+}
+body {
+	background-color: rgb(30, 30, 30);
+	color: rgb(245, 245, 245);
+	padding-bottom: 60px;
+}
+#rotation-wrapper {
+    margin: 60px 0;
+    text-align: center;
+}
+	#rotation-wrapper input {
+		height: 34px;
+		text-align: center;
+		background-color: rgb(76, 76, 76);
+		color: rgb(245, 245, 245);
+		font-size: 20px;
+		width: 50px;
+		margin: 0 6px;
+	}
+	.right-triangle,
+	.left-triangle {
+		cursor: pointer;
+		display: inline-block;
+		vertical-align: bottom;
+		transition: all 500ms ease;
+	}
+	.left-triangle:hover {
+		border-right-color: rgb(195, 195, 195);
+	}
+	.right-triangle:hover {
+		border-left-color: rgb(195, 195, 195);
+	}
+	.right-triangle {
+		width: 0;
+		height: 0;
+		border-top: 20px solid transparent;
+		border-right: 30px solid transparent;
+		border-bottom: 20px solid transparent;
+		border-left: 30px solid rgb(155, 155, 155);
+	}
+	.left-triangle {
+		width: 0;
+		height: 0;
+		border-top: 20px solid transparent;
+		border-right: 30px solid rgb(155, 155, 155);
+		border-bottom: 20px solid transparent;
+		border-left: 30px solid transparent;
+	}
+#thumb-wrapper {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+	#thumb-wrapper canvas {
+		width: 250px;
+		height: 140px;
+		margin: 20px;
+		transition: all 500ms ease;
+		box-sizing: border-box;
+		cursor: pointer;
+		border: 5px solid transparent;
+	}
+	#thumb-wrapper canvas.selected {
+		border: 5px solid rgb(155, 155, 155);
+	}
+	#thumb-wrapper canvas:hover {
+		filter: brightness(1.15);
+	}
+#script-wrapper {
+	width: 100%;
+	background-color: rgb(45, 42, 46);
+}
+	.script-title {
+		display: block;
+		background-color: rgb(35, 32, 36);
+		color: rgb(205, 205, 205);
+		font-weight: bold;
+		font-size: 20px;
+		height: 50px;
+		line-height: 50px;
+		padding-left: 30px;
+	}
+		#set-default-script {
+			display: inline-block;
+			cursor: pointer;
+			text-align: center;
+			line-height: 30px;
+			height: 30px;
+			width: 170px;
+			font-size: 16px;
+			background-color: rgb(63, 81, 181);
+			color: rgb(245, 245, 245);
+			transition: all 500ms ease;
+			font-family: "Verdana", "Helvetica", "Arial", sans-serif;
+			border-radius: 4px;
+			margin: 0 20px;
+		}
+		#set-default-script:hover {
+			background-color: rgb(33, 121, 243);
+		}
+	#script-area {
+		position: relative;
+		height: 270px;
+	}
+		#script {
+			width: calc(100% - 10px);
+			font-size: 20px;
+			height: 260px;
+			line-height: 30px;
+			padding: 15px 30px;
+			box-sizing: border-box;
+			white-space: pre-wrap;
+			background-color: rgb(45, 42, 46);
+			color: rgb(245, 245, 240);
+			overflow-y: scroll;
+			position: relative;
+			outline: 0px solid transparent;
+		}
+			.hl-tag-name {
+				color: rgb(225, 90, 125);
+				font-weight: bold;
+			}
+			.hl-param-name {
+				color: rgb(118, 215, 227);
+				font-style: oblique;
+			}
+			.hl-param-value {
+				color: rgb(248, 210, 100);
+			}
+			.hl-param-equal {
+				color: rgb(155, 155, 155);
+			}
+			.hl-comment {
+				color: rgb(125, 125, 125);
+				font-weight: normal;
+			}
+		/** https://dev.classmethod.jp/articles/webkit-scrollbar-design/
+		 */
+		#script::-webkit-scrollbar {
+			width: 14px;
+			background-color: rgb(45, 42, 46);
+		}
+		#script::-webkit-scrollbar:horizontal {
+			height: 14px;
+		}
+		#script::-webkit-scrollbar-button {
+			height: 6px;
+			background-color: rgb(45, 42, 46);
+		}
+		#script::-webkit-scrollbar-thumb {
+			cursor: pointer;
+			background-color: rgb(155, 155, 155);
+		}
+		#script::-webkit-scrollbar-corner {
+			background-color: rgb(45, 42, 46);
+		}
+		.script-bottom {
+			width: calc(100% - 44px);
+			height: 20px;
+			position: absolute;
+			display: block;
+			bottom: 0;
+			left: 0;
+			content: '';
+			background-color: rgb(45, 42, 46);
+			background: linear-gradient(180deg, rgba(45, 42, 46, 0) 0%, rgba(45, 42, 46, 0.5) 20%, rgba(45, 42, 46, 1) 100%);
+		}
+#canvas-wrapper {
+	display: flex;
+    justify-content: center;
+	flex-wrap: wrap;
+	margin: 35px 0;
+}
+#canvas-wrapper.white {
+	background-color: rgb(248, 248, 248);
+}
+	.canvas-area {
+		position: relative;
+		margin: 20px;
+	}
+	#main-canvas-area {
+		background: blue;
+		width: 800px;
+		height: 450px;
+	}
+		#main-canvas-area canvas {
+			background-image: url("./img/transparent-check.png");
+			background-size: 40px 40px;
+			background-repeat: repeat;
+		}
+		.video-duration {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			margin: 4px;
+			background-color: rgba(0, 0, 0, 0.8);
+			color: rgb(255, 255, 255);
+			font-size: 10px;
+			padding: 3px 4px;
+			height: 12px;
+			line-height: 12px;
+			border-radius: 2px;
+			letter-spacing: 0.5px;
+			font-family: "Arial", sans-serif;
+		}
+	.right-block {
+		/*
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		*/
+		text-align: center;
+		width: 260px;
+	}
+	#sub-canvas-area-1 {
+		display: inline-block;
+		background: green;
+		width: 220px;
+		height: 123px;
+	}
+		#sub-canvas-area-1 canvas {
+			background-image: url("./img/transparent-check.png");
+			background-size: 20px 20px;
+			background-repeat: repeat;
+		}
+	#sub-canvas-area-2 {
+		display: inline-block;
+		background: red;
+		width: 168px;
+		height: 94px;
+	}
+		#sub-canvas-area-2 canvas {
+			background-image: url("./img/transparent-check.png");
+			background-size: 18px 18px;
+			background-repeat: repeat;
+		}
+	#background-color-toggle {
+		display: inline-block;
+		cursor: pointer;
+		text-align: center;
+		line-height: 50px;
+		height: 50px;
+		width: 170px;
+		font-size: 20px;
+		background-color: rgb(63, 81, 181);
+		color: rgb(245, 245, 245);
+		transition: all 500ms ease;
+		font-family: "Verdana", "Helvetica", "Arial", sans-serif;
+		border-radius: 4px;
+		margin: 20px;
+	}
+	#background-color-toggle:hover {
+		background-color: rgb(33, 121, 243);
+	}
+#download-area {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+	.download-button {
+		display: inline-block;
+		cursor: pointer;
+		text-align: center;
+		line-height: 50px;
+		height: 50px;
+		width: 250px;
+		font-size: 20px;
+		background-color: rgb(244, 67, 54);
+		color: rgb(245, 245, 245);
+		transition: all 500ms ease;
+		font-family: "Verdana", "Helvetica", "Arial", sans-serif;
+		border-radius: 4px;
+		margin: 0 10px;
+	}
+	.download-button:before {
+		content: "";
+		display: inline-block;
+		vertical-align: middle;
+		width: 20px;
+		height: 20px;
+		margin-right: 4px;
+		background-image: url("./img/download.png");
+		background-size: 20px 20px;
+	}
+	.download-button:hover {
+		background-color: rgb(255, 113, 0);
+	}

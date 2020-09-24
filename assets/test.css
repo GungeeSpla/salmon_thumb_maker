@@ -1,0 +1,191 @@
+@font-face {
+	font-family: Splatoon1;
+	src:
+		url('./woff/s1kanji.woff2') format('woff2'),
+		url('./woff/s1kanji.woff') format('woff');
+}
+@font-face {
+	font-family: Splatoon1;
+	src:
+		url('./woff/s1kana.woff2') format('woff2'),
+		url('./woff/s1kana.woff') format('woff');
+}
+@font-face {
+	font-family: Splatoon2;
+	src:
+		url('./woff/s2kanji.woff2') format('woff2'),
+		url('./woff/s2kanji.woff') format('woff');
+}
+@font-face {
+	font-family: Splatoon2;
+	src:
+		url('./woff/s2kana.woff2') format('woff2'),
+		url('./woff/s2kana.woff') format('woff');
+}
+body, div, p, table, tr, th, td, ul, ol, li, h1, h2, h3, h4, h5 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+}
+body {
+	font-family: Splatoon2;
+}
+.rotation-container-app {
+	background: rgb(10, 10, 10) url(./img/bg-1.png) top;
+	background-size: 5.7em 5.7em;
+	border-radius: 1.4em;
+	padding: 0 0.3em;
+	margin-bottom: 1.7em;
+	color: #fff;
+	font-family: Splatoon2, sans-serif;
+	box-shadow: 0.1em 0.1em 0 #000;
+	width: max-content;
+	height: max-content;
+}
+	.rotation-container-app h5:before {
+		position: relative;
+		display: inline-block;
+		content: "";
+		background: url(./img/icon-1.png) 50% no-repeat;
+		width: 2.25em;
+		height: 1.5em;
+		background-size: contain;
+		vertical-align: middle;
+		margin-right: 0.7em;
+		top: -0.15em;
+	}
+	.rotation-container-app h5 {
+		color: #fff;
+		font-size: 1.2em;
+		border-bottom: 0.2em dashed #666;
+		padding: 0.7em 0.85em 0.2em;
+		text-align: left;
+	}
+	.rotation-container-app.time-only h5:last-child {
+		border-bottom: none;
+	}
+	.rotation-container-app .rotation-content {
+		display: flex;
+		padding: 0.85em;
+	}
+		.rotation-container-app .rotation-stage {
+			font-size: 0.9em;
+			text-align: center;
+			width: 9.1em;
+		}
+			.rotation-container-app .rotation-stage img {
+				width: 100%;
+				height: auto;
+				border-radius: 0.7em;
+			}
+			.rotation-container-app .rotation-stage p {
+				line-height: 1em;
+			}
+		.rotation-container-app .rotation-weapons {
+			font-size: 1.1em;
+			margin-left: 0.85em;
+			max-width: 12.8em;
+		}
+			.rotation-container-app .rotation-weapons p {
+				text-align: left;
+			}
+			.rotation-container-app .rotation-weapons ul {
+				display: flex;
+				width: 100%;
+				list-style-type: none;
+			}
+				.rotation-container-app .rotation-weapons li:not(:last-child) {
+					margin-right: 0.2em;
+				}
+				.rotation-container-app .rotation-weapons li {
+					display: list-item;
+					text-align: -webkit-match-parent;
+					width: 25%;
+					max-width: 3.2em;
+				}
+					.rotation-container-app .rotation-weapons img {
+						width: 100%;
+						height: auto;
+					}
+.rotation-container-game {
+	background: rgb(30, 30, 30) url(./img/bg-4.png) top;
+	background-size: 15em 7em;
+	border-radius: 1.4em;
+	padding: 0 0.3em;
+	margin-bottom: 1.7em;
+	color: #fff;
+	font-family: Splatoon2, sans-serif;
+	box-shadow: 0.1em 0.1em 0 #000;
+	width: max-content;
+	height: max-content;
+}
+	.rotation-container-game h5:before {
+		position: relative;
+		display: inline-block;
+		content: "";
+		background: url(./img/icon-1.png) 50% no-repeat;
+		width: 2.25em;
+		height: 1.5em;
+		background-size: contain;
+		vertical-align: middle;
+		margin-right: 0.7em;
+		top: -0.15em;
+	}
+	.rotation-container-game h5 {
+		color: #fff;
+		font-size: 1.2em;
+		border-bottom: 0.2em dashed #666;
+		padding: 0.2em 0.4em 0.2em;
+		text-align: left;
+	}
+	.rotation-container-game.time-only h5:last-child {
+		border-bottom: none;
+	}
+	.rotation-container-game .rotation-content {
+		display: flex;
+		padding: 0.85em;
+	}
+		.rotation-container-game .rotation-stage {
+			font-size: 0.9em;
+			text-align: center;
+			width: 9.1em;
+		}
+			.rotation-container-game .rotation-stage img {
+				width: 100%;
+				height: auto;
+				border-radius: 0.7em;
+			}
+			.rotation-container-game .rotation-stage p {
+				line-height: 1em;
+			}
+		.rotation-container-game .rotation-stage-name {
+			font-size: 1.1em;
+			margin-left: 0.85em;
+			width: 8em;
+		}
+		.rotation-container-game .rotation-weapons {
+			font-size: 1.1em;
+			margin-left: 0.85em;
+			max-width: 12.8em;
+		}
+			.rotation-container-game .rotation-weapons p {
+				text-align: left;
+			}
+			.rotation-container-game .rotation-weapons ul {
+				display: flex;
+				width: 100%;
+				list-style-type: none;
+			}
+				.rotation-container-game .rotation-weapons li:not(:last-child) {
+					margin-right: 0.2em;
+				}
+				.rotation-container-game .rotation-weapons li {
+					display: list-item;
+					text-align: -webkit-match-parent;
+					width: 25%;
+					max-width: 3.2em;
+				}
+					.rotation-container-game .rotation-weapons img {
+						width: 100%;
+						height: auto;
+					}

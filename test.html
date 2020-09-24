@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-type" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<script src="./assets/html2canvas.min.js"></script>
+	<script src="./assets/jquery-3.5.1.min.js"></script>
+	<link rel="stylesheet" href="./assets/test.css">
+	<title>Splatoon 2 - Future Salmon Run Rotations</title>
+</head>
+<body>
+<div class="rotation-container-app">
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+	<div class="rotation-content">
+		<div class="rotation-stage">
+			<img src="./assets/img/stage/640x360/1.png">
+			<p>シェケナダム</p>
+		</div>
+		<div class="rotation-weapons">
+			<p class="for-translation" en-text="Supplied Weapons">支給ブキ</p>
+			<ul>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="rotation-container-app time-only">
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+</div>
+<div class="rotation-container-game">
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+	<div class="rotation-content">
+		<div class="rotation-stage">
+			<img src="./assets/img/stage/640x360/1.png">
+		</div>
+		<div class="rotation-stage-name">
+			シェケナダム
+		</div>
+		<div class="rotation-weapons">
+			<p class="for-translation" en-text="Supplied Weapons">支給ブキ</p>
+			<ul>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+				<li><img class="weapon-image" src="./assets/img/weapon/0.png"></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="rotation-container-game time-only">
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+	<h5>7/11 09:00 - 7/13 03:00</h5>
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+	$.getJSON('https://splamp.info/salmon/api/all', function(official_schedules) {
+		official_schedules.reverse();
+		$.getJSON('https://files.oatmealdome.me/bcat/coop.json', function(leak_data) {
+			var last_detail_schedule_index;
+			var last_detail_schedule_num;
+			for (var i = 0; i < official_schedules.length; i++) {
+				if (!('stage' in official_schedules[i])) {
+					last_detail_schedule_index = i - 1;
+					last_detail_schedule_num = official_schedules[last_detail_schedule_index].num;
+					break;
+				}
+			}
+			var head_num = 0;
+			var head_start_time = new Date(Date.parse(leak_data['Phases'][0]["StartDateTime"]+"+00:00")).getTime() / 1000;
+			for (var i = 0; i < official_schedules.length; i++) {
+				if (head_start_time === official_schedules[i].start) {
+					head_num = official_schedules[i].num;
+					break;
+				}
+			}
+			var leak_schedules = [];
+			for (var i = 0; i < leak_data['Phases'].length; i++) {
+				if (head_num + i > last_detail_schedule_num) {
+					var d = leak_data['Phases'][i];
+					var item = {};
+					item['num'] = head_num + i;
+					item['start'] = new Date(Date.parse(d["StartDateTime"]+"+00:00")).getTime() / 1000;
+					item['end'] = new Date(Date.parse(d["EndDateTime"]+"+00:00")).getTime() / 1000;
+					item['rare'] = d['RareWeaponID'] - 20000 + 7000;
+					item['stage'] = d['StageID'] - 5000 + 1;
+					item['w1'] = d['WeaponSets'][0];
+					item['w2'] = d['WeaponSets'][1];
+					item['w3'] = d['WeaponSets'][2];
+					item['w4'] = d['WeaponSets'][3];
+					leak_schedules.push(item);
+				}
+			}
+			console.log(official_schedules);
+			console.log(leak_schedules);
+		});
+	});
+
+
+
+
+var html2canvasWorking = false;
+function downloadCanvas() {
+	// html2canvasが動作中なら何もしない
+	if (html2canvasWorking) {
+		return;
+	}
+	// html2canvasは動作中だ！
+	html2canvasWorking = true;
+	
+    // メイリオのような行間が広いフォントが使用されている要素を
+	// html2canvasにによってキャプチャしようとすると
+	// なんとy座標のズレが生じてしまう！
+	// その補正を行う
+	const $p = document.createElement('p');
+	$p.style.setProperty('margin', '0');
+	$p.style.setProperty('padding', '0');
+	$p.style.setProperty('line-height', 'auto');
+	$p.style.setProperty('position', 'fixed');
+	$p.style.setProperty('left', '-100%');
+	$p.style.setProperty('top', '-100%');
+	$p.style.setProperty('font-size', '100px');
+	$p.textContent = 'A';
+	$canvasWrapper.appendChild($p);
+	const height = $p.clientHeight;
+	// フォントを100pxで描画しているのにクライアントハイトが100を超えるかどうかで場合分け
+	if (height > 100) {
+		// 越えるなら行間が広いフォントが使われているので
+		// 差分に事前に確かめておいた適当な係数をかけてオフセットとする
+		window.html2canvasTextOffsetY = Math.floor((height - 100) * 0.15);
+	} else {
+		// 越えないなら行間が広いフォントは使われていない
+		// オフセットはゼロでいい
+		window.html2canvasTextOffsetY = 0;
+	}
+	$canvasWrapper.removeChild($p);
+	
+	// 日時の取得
+	const date = new Date();
+	const Y = date.getFullYear();
+	const M = date.getMonth() + 1;
+	const D = date.getDate();
+	const h = date.getHours();
+	const m = date.getMinutes();
+	const s = date.getSeconds();
+	const dateStr = Y + '-'
+	  + ('00' + M).slice(-2) + '-'
+	  + ('00' + D).slice(-2) + '-'
+	  + ('00' + h).slice(-2) + '-'
+	  + ('00' + m).slice(-2) + '-'
+	  + ('00' + s).slice(-2);
+	
+	// html2canvasで撮影する
+	let $base, transform;
+	$base = document.querySelector('#tyrano_base');
+	if ($base) {
+		transform = $base.style.getPropertyValue('transform');
+		$base.style.setProperty('transform', 'none');
+	}
+	const finish = () => {
+		html2canvasWorking = false;
+		if ($base) $base.style.setProperty('transform', transform);
+		if (currentCourse.$$trashOpen) {
+			currentCourse.$$trashOpen.alpha = trashOpenAlpha;
+			currentCourse.$$trashClose.alpha = trashCloseAlpha;
+			stage.update();
+		}
+	};
+	html2canvas($drizzlerjs, {
+		backgroundColor: null,
+		x: 0,
+		y: 0,
+		scrollX: 0,
+		scrollY: 0,
+		logging: false,
+	}).then((canvas) => {
+		const courseName = currentCourse.name[initOptions.lang];
+		utilities.downloadCanvas(canvas, courseName + '-' + dateStr);
+		//document.body.appendChild(canvas)
+		finish();
+	}).catch((error) => {
+		finish();
+	});;
+}
+
+
+</script>
+</body>
+</html>
+<!-- Julia was here -->
