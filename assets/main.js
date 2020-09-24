@@ -9,8 +9,17 @@ var last_detail_schedule_index;
 var last_detail_schedule_num;
 var current_schedule_index;
 var download_canvas = document.createElement('canvas');
-var storage_key = 'salmon_thumb_maker';
 var edit_scripts = [];
+var default_text_formats = {
+	start: 'y年M月d日(D) H時',
+	end: 'M月d日(D) H時',
+	output: '【第{num}回】{start_date} ～ {end_date} ({duration}時間)\n【ステージ】{stage_ja}\n【支給ブキ】{w1_ja} {w2_ja} {w3_ja} {w4_ja}',
+}
+var text_formats = {
+	start: default_text_formats.start,
+	end: default_text_formats.end,
+	output: default_text_formats.output,
+}
 
 /** select_script(i)
  */
@@ -34,19 +43,22 @@ function select_script(i) {
 /** save
  */
 function save() {
-	localStorage.setItem(storage_key, JSON.stringify(edit_scripts));
+	localStorage.setItem('salmon_thumb_maker', JSON.stringify(edit_scripts));
 }
 
 /** load
  */
 function load() {
-	var str = localStorage.getItem(storage_key);
+	var str = localStorage.getItem('salmon_thumb_maker');
 	if (str) {
 		var obj = JSON.parse(str);
 		edit_scripts = obj;
 	}
 	if (localStorage.getItem('salmon_thumb_maker_select')) {
 		current_script_index = parseInt(localStorage.getItem('salmon_thumb_maker_select'));
+	}
+	if (localStorage.getItem('salmon_thumb_maker_formats')) {
+		text_formats = JSON.parse(localStorage.getItem('salmon_thumb_maker_formats'));
 	}
 }
 
@@ -55,8 +67,7 @@ function load() {
 window.onload = function() {
 	/** http://ithat.me/2016/12/10/js-web-font-load-start-complete-detection-web-font-loader
 	 */
-	WebFont.load(
-	{
+	WebFont.load({
 		custom: {
 			families: ['Splatoon1', 'Splatoon2']
 		},
@@ -180,6 +191,48 @@ window.onload = function() {
 			}
 		});
 		update_canvas_with_script_all();
+		$('#format-default').on('click', function() {
+			if (window.confirm('すべてのフォーマットをデフォルトに戻します。よろしいですか？')) {
+				text_formats = {
+					start: default_text_formats.start,
+					end: default_text_formats.end,
+					output: default_text_formats.output,
+				};
+				$('#start-format').val(text_formats['start']);
+				$('#end-format').val(text_formats['end']);
+				$('#output-format').val(text_formats['output']);
+				localStorage.setItem('salmon_thumb_maker_formats', JSON.stringify(text_formats));
+				var str = replace_with_schedule_data(text_formats['output'], text_formats['start'], text_formats['end']);
+				$('#output-result').text(str);
+			}
+		});
+		$('#format-copy').on('click', function() {
+			var str = replace_with_schedule_data(text_formats['output'], text_formats['start'], text_formats['end']);
+			copy_str(str);
+		});
+		$('#start-format').on('input change', function() {
+			var val = $(this).val();
+			text_formats['start'] = val;
+			localStorage.setItem('salmon_thumb_maker_formats', JSON.stringify(text_formats));
+			var str = replace_with_schedule_data(text_formats['output'], text_formats['start'], text_formats['end']);
+			$('#output-result').text(str);
+		}).val(text_formats['start']);
+		$('#end-format').on('input change', function() {
+			var val = $(this).val();
+			text_formats['end'] = val;
+			localStorage.setItem('salmon_thumb_maker_formats', JSON.stringify(text_formats));
+			var str = replace_with_schedule_data(text_formats['output'], text_formats['start'], text_formats['end']);
+			$('#output-result').text(str);
+		}).val(text_formats['end']);
+		$('#output-format').on('input change', function() {
+			var val = $(this).val();
+			text_formats['output'] = val;
+			localStorage.setItem('salmon_thumb_maker_formats', JSON.stringify(text_formats));
+			var str = replace_with_schedule_data(text_formats['output'], text_formats['start'], text_formats['end']);
+			$('#output-result').text(str);
+		}).val(text_formats['output']);
+		var str = replace_with_schedule_data(text_formats['output'], text_formats['start'], text_formats['end']);
+		$('#output-result').text(str);
 	});
 }
 
@@ -267,19 +320,7 @@ function parse_script(script) {
 					value = parseFloat(value);
 				}
 				if (typeof value === 'string') {
-					value = value.replace(/\{stage_id\}/g, schedule_array[current_schedule_index].stage);
-					value = value.replace(/\{stage_ja\}/g, schedule_array[current_schedule_index].stage_ja);
-					value = value.replace(/\{stage_ja_short\}/g, schedule_array[current_schedule_index].stage_ja_short);
-					value = value.replace(/\{w1\}/g, schedule_array[current_schedule_index].w1);
-					value = value.replace(/\{w2\}/g, schedule_array[current_schedule_index].w2);
-					value = value.replace(/\{w3\}/g, schedule_array[current_schedule_index].w3);
-					value = value.replace(/\{w4\}/g, schedule_array[current_schedule_index].w4);
-					value = value.replace(/\{w1_ja\}/g, schedule_array[current_schedule_index].w1_ja);
-					value = value.replace(/\{w2_ja\}/g, schedule_array[current_schedule_index].w2_ja);
-					value = value.replace(/\{w3_ja\}/g, schedule_array[current_schedule_index].w3_ja);
-					value = value.replace(/\{w4_ja\}/g, schedule_array[current_schedule_index].w4_ja);
-					value = value.replace(/\{start_date\}/g, get_date_str(schedule_array[current_schedule_index].start, start_date_format));
-					value = value.replace(/\{end_date\}/g, get_date_str(schedule_array[current_schedule_index].end, end_date_format));
+					value = replace_with_schedule_data(value, start_date_format, end_date_format);
 				}
 				params[param] = value;
 				param_flag = true;
@@ -492,6 +533,7 @@ function get_schedule(callback) {
 			schedule_array = [];
 			for (var i = 0; i < last_detail_schedule_num; i++) {
 				official_schedules[i]['stage_ja_short'] = stage_words[ official_schedules[i]['stage'] ]['ja_short'];
+				official_schedules[i]['duration'] = parseInt((official_schedules[i]['end'] - official_schedules[i]['start']) / 60 / 60);
 				schedule_array.push(official_schedules[i]);
 			}
 			for (var i = 0; i < leak_schedules.length; i++) {
@@ -585,4 +627,50 @@ function get_now_date_str() {
 	  + ('00' + m).slice(-2) + '-'
 	  + ('00' + s).slice(-2);
 	return str;
+}
+
+/** replace_with_schedule_data(str, start_date_format, end_date_format)
+ */
+function replace_with_schedule_data(str, start_date_format, end_date_format) {
+	return str
+	.replace(/\{num\}/g, schedule_array[current_schedule_index].num)
+	.replace(/\{duration\}/g, schedule_array[current_schedule_index].duration)
+	.replace(/\{stage_id\}/g, schedule_array[current_schedule_index].stage)
+	.replace(/\{stage_ja\}/g, schedule_array[current_schedule_index].stage_ja)
+	.replace(/\{stage_ja_short\}/g, schedule_array[current_schedule_index].stage_ja_short)
+	.replace(/\{w1\}/g, schedule_array[current_schedule_index].w1)
+	.replace(/\{w2\}/g, schedule_array[current_schedule_index].w2)
+	.replace(/\{w3\}/g, schedule_array[current_schedule_index].w3)
+	.replace(/\{w4\}/g, schedule_array[current_schedule_index].w4)
+	.replace(/\{w1_ja\}/g, schedule_array[current_schedule_index].w1_ja)
+	.replace(/\{w2_ja\}/g, schedule_array[current_schedule_index].w2_ja)
+	.replace(/\{w3_ja\}/g, schedule_array[current_schedule_index].w3_ja)
+	.replace(/\{w4_ja\}/g, schedule_array[current_schedule_index].w4_ja)
+	.replace(/\{start_date\}/g, get_date_str(schedule_array[current_schedule_index].start, start_date_format))
+	.replace(/\{end_date\}/g, get_date_str(schedule_array[current_schedule_index].end, end_date_format));
+}
+
+/** copy_str(str)
+ */
+function copy_str(str) {
+	var tmp = document.createElement('div');
+	var pre = document.createElement('pre');
+	pre.style.webkitUserSelect = 'auto';
+	pre.style.userSelect = 'auto';
+	tmp.appendChild(pre).textContent = str;
+	var s = tmp.style;
+	s.position = 'fixed';
+	s.right = '200%';
+	document.body.appendChild(tmp);
+	document.getSelection().selectAllChildren(tmp);
+	var result = document.execCommand('copy');
+	document.body.removeChild(tmp);
+	if (result) {
+		toastr.options = {
+		  'positionClass': 'toast-top-right',
+		  'timeOut': '2000',
+		};
+		toastr.success('Copied!');
+	}
+	return result;
 }

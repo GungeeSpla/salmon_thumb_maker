@@ -408,3 +408,49 @@ td:nth-child(3) {
 		position: absolute;
 		left: -20px;
 	}
+
+#format-table input,
+#format-table textarea {
+	height: 34px;
+	text-align: center;
+	background-color: rgb(76, 76, 76);
+	color: rgb(245, 245, 245);
+	font-size: 16px;
+	box-sizing: border-box;
+	width: 100%;
+    border-width: 2px;
+    border-style: inset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(195, 195, 195));
+}
+	textarea#output-format {
+		text-align: left;
+		vertical-align: top;
+		height: 100px;
+		padding: 10px;
+		box-sizing: border-box;
+	}
+	#output-result {
+		white-space: pre-wrap;
+		text-align: left;
+		padding: 10px;
+		box-sizing: border-box;
+	}
+	.format-button {
+		display: inline-block;
+		cursor: pointer;
+		text-align: center;
+		line-height: 30px;
+		height: 30px;
+		width: 170px;
+		font-size: 16px;
+		background-color: rgb(63, 81, 181);
+		color: rgb(245, 245, 245);
+		transition: all 500ms ease;
+		font-family: "Verdana", "Helvetica", "Arial", sans-serif;
+		border-radius: 4px;
+		user-select: none;
+	}
+	.format-button {
+		background-color: rgb(33, 121, 243);
+	}
+

@@ -4,14 +4,18 @@
 	<title>サーモンラン配信サムネイルメーカー</title>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-	<script src="./assets/jquery-3.5.1.min.js"></script>
-	<script src="./assets/webfont.js"></script>
-	<script  src="./assets/extend.js?v1.3"></script>
-	<script    src="./assets/word.js?v1.3"></script>
-	<script src="./assets/content.js?v1.3"></script>
-	<script  src="./assets/script.js?v1.3"></script>
-	<script    src="./assets/main.js?v1.3"></script>
-	<link   href="./assets/style.css?v1.3" rel="stylesheet">
+	<!-- ライブラリここから -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+	<!-- ライブラリここまで -->
+	<script  src="./assets/extend.js?v1.4"></script>
+	<script    src="./assets/word.js?v1.4"></script>
+	<script src="./assets/content.js?v1.4"></script>
+	<script  src="./assets/script.js?v1.4"></script>
+	<script    src="./assets/main.js?v1.4"></script>
+	<link   href="./assets/style.css?v1.4" rel="stylesheet">
 	<meta name="twitter:card"        content="summary" />
 	<meta name="twitter:site"        content="@GungeeSpla" />
 	<meta name="twitter:title"       content="サーモンラン配信サムネイルメーカー" />
@@ -20,7 +24,7 @@
 	<link rel="icon" type="image/png" href="./assets/img/twitter-card.png">
 </head>
 <body>
-<h1>サーモンラン配信サムネイルメーカー v1.3</h1>
+<h1>サーモンラン配信サムネイルメーカー v1.4</h1>
 <h2>スケジュールの選択</h2>
 <div id="rotation-wrapper">
 	<div style="display: inline-block;">
@@ -67,6 +71,18 @@
 </div>
 <div class="text-block normal-param">
 	<p class="caution">外部サイトの画像を使用している場合、上のボタンからはダウンロードできません（ブラウザのセキュリティの仕様上の問題）。その場合は、大きなプレビュー画像を右クリックして「名前を付けて画像を保存」から保存してみてください。</p>
+</div>
+<h2>動画概要欄用テキスト</h2>
+<div class="text-block special-param" style="text-align: center;">
+	<table id="format-table" style="margin-bottom: 20px;">
+		<tr><th style="width: 30%;">設定項目</th><th>内容</th></tr>
+		<tr><td>開始時刻のフォーマット</td><td><input type="text" id="start-format"></td></tr>
+		<tr><td>終了時刻のフォーマット</td><td><input type="text" id="end-format"></td></tr>
+		<tr><td>出力フォーマット</td><td><textarea id="output-format"></textarea></td></tr>
+		<tr><td>出力結果</td><td><p id="output-result"></p></td></tr>
+	</table>
+	<div class="format-button" id="format-copy">出力結果をコピー</div>
+	<div class="format-button" id="format-default">デフォルトに戻す</div>
 </div>
 <h2>スクリプトについて</h2>
 <div class="text-block">
@@ -206,8 +222,8 @@
 	{w2_ja}          | ブキ2の日本語の正式名称。
 	{w3_ja}          | ブキ3の日本語の正式名称。
 	{w4_ja}          | ブキ4の日本語の正式名称。
-	{start}          | スケジュールの始まる時間。
-	{end}            | スケジュールの終わる時間。
+	{start_date}     | スケジュールの始まる時間。
+	{end_date}       | スケジュールの終わる時間。
 	</p>
 </div>
 </body>
