@@ -294,6 +294,8 @@ td:nth-child(3) {
 			background-image: url("./img/transparent-check.png");
 			background-size: 100px 100px;
 			background-repeat: repeat;
+			width: 800px;
+			height: 450px;
 		}
 		.video-duration {
 			position: absolute;
@@ -365,6 +367,7 @@ td:nth-child(3) {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	margin-bottom: 40px;
 }
 	.download-button {
 		display: inline-block;
@@ -394,4 +397,13 @@ td:nth-child(3) {
 	}
 	.download-button:hover {
 		background-color: rgb(255, 113, 0);
+	}
+	.caution {
+		position: relative;
+		margin-left: 30px;
+	}
+	.caution:before {
+		content: '※';
+		position: absolute;
+		left: -20px;
 	}

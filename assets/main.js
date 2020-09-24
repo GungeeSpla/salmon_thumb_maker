@@ -553,15 +553,19 @@ function get_date_str(unix, format) {
 }
 
 function download(width, height, type) {
-	download_canvas.width = width;
-	download_canvas.height = height;
-	var ctx = download_canvas.getContext('2d');
-	ctx.clearRect(0, 0, width, height);
-	ctx.drawImage(canvases[current_script_index], 0, 0, width, height);
-	var link = document.createElement('a');
-	link.href = download_canvas.toDataURL('image/' + type);
-	link.download = get_now_date_str() + '.' + type;
-	link.click();
+	try {
+		download_canvas.width = width;
+		download_canvas.height = height;
+		var ctx = download_canvas.getContext('2d');
+		ctx.clearRect(0, 0, width, height);
+		ctx.drawImage(canvases[current_script_index], 0, 0, width, height);
+		var link = document.createElement('a');
+		link.href = download_canvas.toDataURL('image/' + type);
+		link.download = get_now_date_str() + '.' + type;
+		link.click();
+	} catch (e) {
+		alert('ダウンロードに失敗しました。プレビュー画面を右クリックして「名前を付けて画像を保存」を選択してみてください。');
+	}
 }
 
 /** get_now_date_str()
@@ -581,17 +585,4 @@ function get_now_date_str() {
 	  + ('00' + m).slice(-2) + '-'
 	  + ('00' + s).slice(-2);
 	return str;
-}
-
-/** download_canvas(slc)
- */
-function download_canvas(slc) {
-	var canvas = 
-		(typeof slc === 'undefined') ? $('canvas').get(0) :
-		(typeof slc === 'string') ? $(slc).get(0) :
-		slc;
-	var link = document.createElement("a");
-	link.href = canvas.toDataURL("image/png");
-	link.download = get_now_date_str() + ".png";
-	link.click();
 }
