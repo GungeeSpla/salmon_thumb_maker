@@ -33,4 +33,5 @@ default_scripts[3] =
 'image src="./assets/img/salmon-run-image-3.jpg"\n'+
 'image src="https://pbs.twimg.com/profile_images/1279643943731212290/31pcBj69_400x400.jpg" width="400" x="1520" y="680"\n'+
 'text text="at {stage_ja_short}" color="#666666" size="120" align="center" x="500" y="520"\n'+
-'text text="参加型LIVE" color="#E91E63" size="160" align="center" x="500" y="380"';
+'text text="参加型LIVE" color="#E91E63" size="160" align="center" x="500" y="380"\n'+
+'rect width="1920" height="1080" stroke_color="white" color="none"';
