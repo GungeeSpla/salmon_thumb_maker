@@ -10,7 +10,6 @@ var last_detail_schedule_num;
 var current_schedule_index;
 var download_canvas = document.createElement('canvas');
 var storage_key = 'salmon_thumb_maker';
-var storage_key_ = 'salmon_thumb_maker_select';
 var edit_scripts = [];
 
 /** select_script(i)
