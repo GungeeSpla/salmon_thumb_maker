@@ -74,9 +74,19 @@ CanvasRenderingContext2D.prototype.fillRectKadomaruImageTile = function(src, x, 
 /** ctx.fillRectKadomaru()
  */
 CanvasRenderingContext2D.prototype.fillRectKadomaru = function(x, y, w, h, r) {
-    //ctx.lineWidth = 1;
-    //ctx.strokeStyle = color;
-    //ctx.fillStyle = color;
+    this.beginPath();
+    this.moveTo(x, y + r);
+    this.arc(x + r, y + h - r, r, Math.PI, Math.PI * 0.5, true);
+    this.arc(x + w - r, y + h - r, r, Math.PI * 0.5, 0,1);
+    this.arc(x + w - r, y + r,r, 0, Math.PI * 1.5, 1);
+    this.arc(x + r, y + r, r, Math.PI * 1.5, Math.PI, 1);
+    this.closePath();
+    this.fill();
+}
+
+/** ctx.strokeRectKadomaru()
+ */
+CanvasRenderingContext2D.prototype.strokeRectKadomaru = function(x, y, w, h, r) {
     this.beginPath();
     this.moveTo(x, y + r);
     this.arc(x + r, y + h - r, r, Math.PI, Math.PI * 0.5, true);
@@ -85,5 +95,4 @@ CanvasRenderingContext2D.prototype.fillRectKadomaru = function(x, y, w, h, r) {
     this.arc(x + r, y + r, r, Math.PI * 1.5, Math.PI, 1);
     this.closePath();
     this.stroke();
-    this.fill();
 }

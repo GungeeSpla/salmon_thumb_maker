@@ -31,9 +31,85 @@ body {
 	background-color: rgb(30, 30, 30);
 	color: rgb(245, 245, 245);
 	padding-bottom: 60px;
+	font-size: 16px;
+}
+h1 {
+	text-align: center;
+	font-weight: bold;
+	font-family: Splatoon1;
+	font-size: 64px;
+}
+h2 {
+	margin-top: 40px;
+	margin-bottom: 10px;
+	text-align: center;
+	font-weight: bold;
+	font-family: Splatoon1;
+	font-size: 32px;
+}
+h3 {
+	font-size: 26px;
+	font-weight: bold;
+	margin-top: 40px;
+	margin-bottom: 20px;
+	font-family: "Arial", sans-serif;
+	color: rgb(225, 90, 125);
+}
+.text-block {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto; 
+}
+ol {
+	list-style-type: disc;
+    margin-left: 30px;
+}
+ol li {
+	margin-bottom: 10px;
+}
+a {
+	color: rgb(0, 188, 212);
+}
+table {
+	margin-top: 20px;
+	margin-bottom: 80px;
+	border-collapse: collapse;
+}
+th {
+	text-align: center;
+	font-weight: bold;
+}
+td, th {
+	border: 1px solid rgb(155, 155, 155);
+}
+th:nth-child(1) {
+	width: 200px;
+}
+th:nth-child(2) {
+	width: 150px;
+}
+.special-param table {
+	width: 100%;
+}
+.special-param th:nth-child(1) {
+	width: 50%;
+}
+.special-param th:nth-child(2) {
+	width: auto;
+}
+th:nth-child(3) {
+	width: auto;
+}
+td:nth-child(1) {
+	text-align: center;
+}
+td:nth-child(2) {
+	text-align: center;
+}
+td:nth-child(3) {
+	padding: 5px 20px;
 }
 #rotation-wrapper {
-    margin: 60px 0;
     text-align: center;
 }
 	#rotation-wrapper input {
@@ -78,6 +154,7 @@ body {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	margin-top: -10px;
 }
 	#thumb-wrapper canvas {
 		width: 250px;
@@ -86,7 +163,10 @@ body {
 		transition: all 500ms ease;
 		box-sizing: border-box;
 		cursor: pointer;
-		border: 5px solid transparent;
+		border: 5px solid rgb(30, 30, 30);;
+		background-image: url("./img/transparent-check.png");
+		background-size: 29px 29px;
+		background-repeat: repeat;
 	}
 	#thumb-wrapper canvas.selected {
 		border: 5px solid rgb(155, 155, 155);
@@ -100,13 +180,13 @@ body {
 }
 	.script-title {
 		display: block;
+		text-align: center;
 		background-color: rgb(35, 32, 36);
 		color: rgb(205, 205, 205);
 		font-weight: bold;
 		font-size: 20px;
-		height: 50px;
+		height: 60px;
 		line-height: 50px;
-		padding-left: 30px;
 	}
 		#set-default-script {
 			display: inline-block;
@@ -121,19 +201,17 @@ body {
 			transition: all 500ms ease;
 			font-family: "Verdana", "Helvetica", "Arial", sans-serif;
 			border-radius: 4px;
-			margin: 0 20px;
 		}
 		#set-default-script:hover {
 			background-color: rgb(33, 121, 243);
 		}
 	#script-area {
 		position: relative;
-		height: 270px;
 	}
 		#script {
 			width: calc(100% - 10px);
 			font-size: 20px;
-			height: 260px;
+			height: 320px;
 			line-height: 30px;
 			padding: 15px 30px;
 			box-sizing: border-box;
@@ -159,7 +237,7 @@ body {
 				color: rgb(155, 155, 155);
 			}
 			.hl-comment {
-				color: rgb(125, 125, 125);
+				color: rgb(155, 155, 155);
 				font-weight: normal;
 			}
 		/** https://dev.classmethod.jp/articles/webkit-scrollbar-design/
@@ -213,7 +291,7 @@ body {
 	}
 		#main-canvas-area canvas {
 			background-image: url("./img/transparent-check.png");
-			background-size: 40px 40px;
+			background-size: 100px 100px;
 			background-repeat: repeat;
 		}
 		.video-duration {

@@ -53,7 +53,43 @@ function load() {
 /** onload
  */
 window.onload = function() {
+	/** http://ithat.me/2016/12/10/js-web-font-load-start-complete-detection-web-font-loader
+	 */
+	WebFont.load(
+	{
+		custom: {
+			families: ['Splatoon1', 'Splatoon2']
+		},
+		active: function() {
+			update_canvas_with_script_all();
+		}
+	});	
 	load();
+	$('.parse-table').each(function() {
+		var text = $(this).text().trim();
+		var lines = text.split('\n');
+		var html = '<thead>';
+		for (var y = 0; y < lines.length; y++) {
+			html += '<tr>';
+			var line = lines[y];
+			var tds = line.split('|');
+			for (var x = 0; x < tds.length; x++) {
+				var td = tds[x].trim();
+				if (y === 0) {
+					html += '<th>' + td + '</th>';
+				} else {
+					html += '<td>' + td + '</td>';
+				}
+			}
+			if (y === 0) {
+				html += '</thead></tr><tbody>';
+			} else {
+				html += '</tr>'
+			}
+		}
+		html += '</tbody>';
+		$(this).replaceWith('<table>' + html + '</table>');
+	});
 	get_schedule(function() {
 		current_schedule_index = last_detail_schedule_index - 1;
 		var $rotation_num = $('#rotation-num');
@@ -128,7 +164,6 @@ window.onload = function() {
 	            var ret = get_cursor_text_node($script.get(0), pos);
 	            $script.get(0).focus();
 				document.getSelection().collapse(ret.node, ret.pos)
-				
 				edit_scripts[current_script_index] = script;
 				save();
 				
@@ -146,7 +181,6 @@ window.onload = function() {
 		});
 		update_canvas_with_script_all();
 	});
-
 }
 
 /** parse_script(script)
@@ -235,10 +269,15 @@ function parse_script(script) {
 				if (typeof value === 'string') {
 					value = value.replace(/\{stage_id\}/g, schedule_array[current_schedule_index].stage);
 					value = value.replace(/\{stage_ja\}/g, schedule_array[current_schedule_index].stage_ja);
+					value = value.replace(/\{stage_ja_short\}/g, schedule_array[current_schedule_index].stage_ja_short);
 					value = value.replace(/\{w1\}/g, schedule_array[current_schedule_index].w1);
 					value = value.replace(/\{w2\}/g, schedule_array[current_schedule_index].w2);
 					value = value.replace(/\{w3\}/g, schedule_array[current_schedule_index].w3);
 					value = value.replace(/\{w4\}/g, schedule_array[current_schedule_index].w4);
+					value = value.replace(/\{w1_ja\}/g, schedule_array[current_schedule_index].w1_ja);
+					value = value.replace(/\{w2_ja\}/g, schedule_array[current_schedule_index].w2_ja);
+					value = value.replace(/\{w3_ja\}/g, schedule_array[current_schedule_index].w3_ja);
+					value = value.replace(/\{w4_ja\}/g, schedule_array[current_schedule_index].w4_ja);
 					value = value.replace(/\{start_date\}/g, get_date_str(schedule_array[current_schedule_index].start, start_date_format));
 					value = value.replace(/\{end_date\}/g, get_date_str(schedule_array[current_schedule_index].end, end_date_format));
 				}
@@ -320,13 +359,24 @@ function update_canvas_with_script(i) {
 				Proto = TextContent;
 				break;
 			case 'dotted_line':
-				Proto = LineContent;
+				Proto = DottedLineContent;
 				break;
 			case 'circle':
 				Proto = CircleContent;
 				break;
 			case 'rect':
 				Proto = RectContent;
+				break;
+			case 'weapon_list':
+				Proto = WeaponListContent;
+				tag.params.w1 = schedule_array[current_schedule_index].w1;
+				tag.params.w2 = schedule_array[current_schedule_index].w2;
+				tag.params.w3 = schedule_array[current_schedule_index].w3;
+				tag.params.w4 = schedule_array[current_schedule_index].w4;
+				break;
+			case 'stage':
+				Proto = StageContent;
+				tag.params.stage = schedule_array[current_schedule_index].stage;
 				break;
 			default:
 				break;
@@ -378,10 +428,12 @@ function get_cursor_text_node(editable_elm, pos) {
 		if (len_sum <= pos && pos < len_sum + len) {
 			result.node = node;
 			result.pos = pos - len_sum;
-			break;
+			return result;
 		}
 		len_sum += len;
 	}
+	result.node = node;
+	result.pos = node.nodeValue.length;
 	return result;
 }
 
@@ -439,6 +491,7 @@ function get_schedule(callback) {
 			}
 			schedule_array = [];
 			for (var i = 0; i < last_detail_schedule_num; i++) {
+				official_schedules[i]['stage_ja_short'] = stage_words[ official_schedules[i]['stage'] ]['ja_short'];
 				schedule_array.push(official_schedules[i]);
 			}
 			for (var i = 0; i < leak_schedules.length; i++) {
