@@ -201,6 +201,7 @@ td:nth-child(3) {
 			transition: all 500ms ease;
 			font-family: "Verdana", "Helvetica", "Arial", sans-serif;
 			border-radius: 4px;
+			user-select: none;
 		}
 		#set-default-script:hover {
 			background-color: rgb(33, 121, 243);
@@ -355,6 +356,7 @@ td:nth-child(3) {
 		font-family: "Verdana", "Helvetica", "Arial", sans-serif;
 		border-radius: 4px;
 		margin: 20px;
+		user-select: none;
 	}
 	#background-color-toggle:hover {
 		background-color: rgb(33, 121, 243);
@@ -378,6 +380,7 @@ td:nth-child(3) {
 		font-family: "Verdana", "Helvetica", "Arial", sans-serif;
 		border-radius: 4px;
 		margin: 0 10px;
+		user-select: none;
 	}
 	.download-button:before {
 		content: "";
