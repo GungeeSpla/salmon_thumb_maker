@@ -117,6 +117,8 @@ window.onload = function() {
 				} else {
 					current_schedule_index = num - 1;
 					update_canvas_with_script_all();
+					var str = replace_with_schedule_data(text_formats['output'], text_formats['start'], text_formats['end']);
+					$('#output-result').text(str);
 				}
 			}, 500);
 		});
