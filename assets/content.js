@@ -343,6 +343,9 @@ function WeaponListContent(opt) {
 		w4: 0,
 		width: 300,
 		margin: 50,
+		color: 'none',
+		stroke_color: 'none',
+		stroke_width: 20,
 	}, opt);
 	var self = this;
 	this.imgs = [];
@@ -367,6 +370,16 @@ WeaponListContent.prototype.draw = function() {
 		return;
 	}
 	var ctx = this.ctx;
+	var x = this.x;
+	this.x = x + 0 * (this.width + this.margin);
+	CircleContent.prototype.draw.call(this);
+	this.x = x + 1 * (this.width + this.margin);
+	CircleContent.prototype.draw.call(this);
+	this.x = x + 2 * (this.width + this.margin);
+	CircleContent.prototype.draw.call(this);
+	this.x = x + 3 * (this.width + this.margin);
+	CircleContent.prototype.draw.call(this);
+	this.x = x;
 	ctx.drawImage(this.imgs[0], this.x + (this.width + this.margin) * 0, this.y, this.width, this.width);
 	ctx.drawImage(this.imgs[1], this.x + (this.width + this.margin) * 1, this.y, this.width, this.width);
 	ctx.drawImage(this.imgs[2], this.x + (this.width + this.margin) * 2, this.y, this.width, this.width);

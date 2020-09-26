@@ -10,12 +10,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 	<!-- ライブラリここまで -->
-	<script  src="./assets/extend.js?v1.4.1"></script>
-	<script    src="./assets/word.js?v1.4.1"></script>
-	<script src="./assets/content.js?v1.4.1"></script>
-	<script  src="./assets/script.js?v1.4.1"></script>
-	<script    src="./assets/main.js?v1.4.1"></script>
-	<link   href="./assets/style.css?v1.4.1" rel="stylesheet">
+	<script  src="./assets/extend.js?v1.5"></script>
+	<script    src="./assets/word.js?v1.5"></script>
+	<script src="./assets/content.js?v1.5"></script>
+	<script  src="./assets/script.js?v1.5"></script>
+	<script    src="./assets/main.js?v1.5"></script>
+	<link   href="./assets/style.css?v1.5" rel="stylesheet">
 	<meta name="twitter:card"        content="summary_large_image" />
 	<meta name="twitter:site"        content="@GungeeSpla" />
 	<meta name="twitter:title"       content="サーモンラン配信サムネイルメーカー" />
@@ -24,7 +24,7 @@
 	<link rel="icon" type="image/png" href="./assets/img/twitter-card.png">
 </head>
 <body>
-<h1>サーモンラン配信サムネイルメーカー v1.4.1</h1>
+<h1>サーモンラン配信サムネイルメーカー v1.5</h1>
 <h2>スケジュールの選択</h2>
 <div id="rotation-wrapper">
 	<div style="display: inline-block;">
@@ -116,10 +116,10 @@
 	パラメータ名 | 初期値 | 説明
 	x            | 0      | 円の左上のx座標をpx単位で指定します。ゼロだと画面の左端に描画されます。数を増やすと右に移動します。
 	y            | 0      | 円の左上のy座標をpx単位で指定します。ゼロだと画面の上端に描画されます。数を増やすと下に移動します。
-	width        | 500    | 四角形の直径をpx単位で指定します。
-	color        | black  | 四角形の塗りつぶしの色を指定します。形式は「white」「#ffffff」「rgb(255, 255, 255)」「rgba(255, 255, 255, 1)」など。「none」で透明になります。
-	stroke_color | none   | 四角形の線の色を指定します。
-	stroke_width | 2      | 四角形の枠線の太さをpx単位で指定します。
+	width        | 500    | 円の直径をpx単位で指定します。
+	color        | black  | 円の塗りつぶしの色を指定します。
+	stroke_color | none   | 円の線の色を指定します。
+	stroke_width | 2      | 円の枠線の太さをpx単位で指定します。
 	</p>
 </div>
 <div class="text-block normal-param">
@@ -133,7 +133,7 @@
 	height       | 20     | 線全体(四角形)の高さをpx単位で指定します。
 	a            | 40     | 点ひとつの横幅円の横幅をpx単位で指定します。
 	b            | 20     | 点と点の間隔をpx単位で指定します。
-	color        | black  | 線の色を指定します。形式は「white」「#ffffff」「rgb(255, 255, 255)」「rgba(255, 255, 255, 1)」など。「none」で透明になります。
+	color        | black  | 線の色を指定します。
 	</p>
 </div>
 <div class="text-block normal-param">
@@ -148,7 +148,7 @@
 	baseline      | alphabetic | テキストの縦方向の基準点をキーワードで指定します。「top」「middle」「alphabetic」「bottom」でそれぞれ「上端」「中央」「アルファベットのベースライン」「下端」を指定できます。詳しくは&lt;a href="http://www.htmq.com/canvas/textBaseline.shtml" target="_blank">こちら&lt;/a>を見てください。
 	size          | 200        | 文字サイズをpx単位で指定します。
 	family        | Splatoon1  | フォントを指定します。「Splatoon1」「Splatoon2」の他、「sans-serif」でゴシック体、「serif」で明朝体を指定できます。PCにインストールされているフォント名を指定することもできます。使用可能なフォントは&lt;a href="https://wordmark.it/" target="_blank">Wordmark.it&lt;/a>で調べることができます。
-	color         | black      | 線の色を指定します。形式は「white」「#ffffff」「rgb(255, 255, 255)」「rgba(255, 255, 255, 1)」など。「none」で透明になります。
+	color         | black      | 線の色を指定します。
 	stroke_color  | none       | 縁取り線の色を指定します。
 	stroke_width  | 20         | 縁取り線の太さをpx単位で指定します。
 	shadow_color  | none       | シャドーの色を指定します。
@@ -195,6 +195,9 @@
 	y             | 0        | 画像のy座標をpx単位で指定します。
 	width         | 300      | 各ブキの画像の横幅をpx単位で指定します。
 	margin        | 50       | 各ブキの画像の間隔をpx単位で指定します。
+	color         | none     | 背景の円の塗りつぶしの色を指定します。
+	stroke_color  | none     | 背景の円の線の色を指定します。
+	stroke_width  | 2        | 背景の円の枠線の太さをpx単位で指定します。
 	</p>
 </div>
 <div class="text-block normal-param">

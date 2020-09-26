@@ -15,12 +15,8 @@ default_scripts[0] =
 
 default_scripts[1] =
 'stage type="2"\n'+
-'text text="野良 in {stage_ja}" align="center" baseline="middle" family="Splatoon2" size="130" shadow_color="rgb(0, 0, 0)" shadow_blur="30" shadow_strong="3" color="rgb(255, 255, 255)" x="960" y="540"\n'+
-'circle color="rgba(0, 0, 0, 0.5)" width="280" x="570" y="50"\n'+
-'circle color="rgba(0, 0, 0, 0.5)" width="280" x="900" y="50"\n'+
-'circle color="rgba(0, 0, 0, 0.5)" width="280" x="1230" y="50"\n'+
-'circle color="rgba(0, 0, 0, 0.5)" width="280" x="1560" y="50"\n'+
-'weapon_list x="570" y="50" width="280"';
+'text text="野良 in {stage_ja}" align="center" baseline="middle" family="Splatoon2" size="130" shadow_color="rgb(0, 0, 0)" shadow_blur="30" shadow_strong="3" color="rgb(255, 255, 255)" x="960" y="720"\n'+
+'weapon_list x="320" y="250" width="280" color="rgba(0, 0, 0, 0.7)"';
 
 default_scripts[2] =
 'image src="./assets/img/bg-1.png" color="rgb(10, 10, 10)" width="1920" height="1080" tile_width="150"\n'+
