@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>サーモンラン - シフトのリーク情報</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-type" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="./assets/word.js"></script>
+	<style>
+	@font-face {
+		font-family: Splatoon1;
+		src:
+			url('./assets/woff/s1kanji.woff2') format('woff2'),
+			url('./assets/woff/s1kanji.woff') format('woff');
+	}
+	@font-face {
+		font-family: Splatoon1;
+		src:
+			url('./assets/woff/s1kana.woff2') format('woff2'),
+			url('./assets/woff/s1kana.woff') format('woff');
+	}
+	@font-face {
+		font-family: Splatoon2;
+		src:
+			url('./assets/woff/s2kanji.woff2') format('woff2'),
+			url('./assets/woff/s2kanji.woff') format('woff');
+	}
+	@font-face {
+		font-family: Splatoon2;
+		src:
+			url('./assets/woff/s2kana.woff2') format('woff2'),
+			url('./assets/woff/s2kana.woff') format('woff');
+	}
+	body, div, p, table, tr, th, td, ul, ol, li, h1, h2, h3, h4, h5 {
+		margin: 0;
+		padding: 0;
+		font-weight: normal;
+	}
+	body {
+		font-family: Splatoon2;
+	    background: #9b1e09 url('./assets/img/bg-3.png') top;
+	    background-size: 510px 255px;
+	}
+	#rotations {
+		font-size: 2vw;
+		margin: 1.5em auto;
+		width: max-content;
+	}
+	@media (min-width: 1000px) {
+		#rotations {
+			font-size: 20px;
+		}
+	}
+	.rotation-container-game {
+		background: rgb(30, 30, 30) url('./assets/img/bg-4.png') top;
+		background-size: 15em 7em;
+		border-radius: 1.4em;
+		padding: 0 0.3em;
+		margin-bottom: 1.7em;
+		color: #fff;
+		font-family: Splatoon2, sans-serif;
+		box-shadow: 0.1em 0.1em 0 #000;
+		width: max-content;
+		height: max-content;
+	}
+		.rotation-container-game h5:before {
+			position: relative;
+			display: inline-block;
+			content: "";
+			background: url('./assets/img/icon-1.png') 50% no-repeat;
+			width: 2.25em;
+			height: 1.5em;
+			background-size: contain;
+			vertical-align: middle;
+			margin-right: 0.7em;
+			top: -0.15em;
+		}
+		.rotation-container-game h5 {
+			color: #fff;
+			font-size: 1.2em;
+			border-bottom: 0.2em dashed #666;
+			padding: 0.2em 0.4em 0.2em;
+			text-align: left;
+		}
+		.rotation-container-game.time-only h5:last-child {
+			border-bottom: none;
+		}
+		.rotation-container-game .rotation-content {
+			display: flex;
+			padding: 0.85em 0.85em 0;
+		}
+			.rotation-container-game .rotation-stage {
+				font-size: 0.9em;
+				text-align: center;
+				width: 9.1em;
+			}
+				.rotation-container-game .rotation-stage img {
+					width: 100%;
+					height: auto;
+					border-radius: 0.7em;
+				}
+				.rotation-container-game .rotation-stage p {
+					line-height: 1em;
+				}
+			.rotation-container-game .rotation-stage-name {
+				font-size: 1.1em;
+				margin-left: 0.85em;
+				width: 8em;
+			}
+			.rotation-container-game .rotation-weapons {
+				font-size: 1.1em;
+				margin-left: 0.85em;
+				max-width: 12.8em;
+			}
+				.rotation-container-game .rotation-weapons p {
+					text-align: left;
+				}
+				.rotation-container-game .rotation-weapons ul {
+					display: flex;
+					width: 100%;
+					list-style-type: none;
+				}
+					.rotation-container-game .rotation-weapons li:not(:last-child) {
+						margin-right: 0.2em;
+					}
+					.rotation-container-game .rotation-weapons li {
+						display: list-item;
+						text-align: -webkit-match-parent;
+						width: 25%;
+						max-width: 3.2em;
+					}
+						.rotation-container-game .rotation-weapons img {
+							width: 100%;
+							height: auto;
+						}
+					.rotation-container-game .rotation-weapons .rare-weapon {
+						display: none;
+					}
+					.rotation-container-game .rotation-weapons .rare-weapon[rare-id*="70"] {
+						display: list-item;
+					}
+	</style>
+</head>
+<body>
+<div id="rotations"></div>
+<script>
+var base_html = '<div class="rotation-container-game"><h5>第{num}回 {start_date} - {end_date}</h5><div class="rotation-content"><div class="rotation-stage"><img src="./assets/img/stage/640x360/{stage_id}.png"></div><div class="rotation-stage-name">{stage_ja}</div><div class="rotation-weapons"><p>支給ブキ</p><ul><li><img class="weapon-image" src="./assets/img/weapon/{w1}.png"></li><li><img class="weapon-image" src="./assets/img/weapon/{w2}.png"></li><li><img class="weapon-image" src="./assets/img/weapon/{w3}.png"></li><li><img class="weapon-image" src="./assets/img/weapon/{w4}.png"></li><li class="rare-weapon" rare-id="{rare}"><img class="weapon-image" src="./assets/img/weapon/{rare}.png"></li></ul></div></div></div>';
+
+$.getJSON('https://splamp.info/salmon/api/all', function(official_schedules) {
+	official_schedules.reverse();
+	$.getJSON('https://files.oatmealdome.me/bcat/coop.json', function(leak_data) {
+		var schedule_array;
+		var last_detail_schedule_index;
+		var last_detail_schedule_num;
+		for (var i = 0; i < official_schedules.length; i++) {
+			if (!('stage' in official_schedules[i])) {
+				last_detail_schedule_index = i - 1;
+				last_detail_schedule_num = official_schedules[last_detail_schedule_index].num;
+				break;
+			}
+		}
+		var head_num = 0;
+		var head_start_time = new Date(Date.parse(leak_data['Phases'][0]["StartDateTime"]+"+00:00")).getTime() / 1000;
+		for (var i = 0; i < official_schedules.length; i++) {
+			if (head_start_time === official_schedules[i].start) {
+				head_num = official_schedules[i].num;
+				break;
+			}
+		}
+		var leak_schedules = [];
+		for (var i = 0; i < leak_data['Phases'].length; i++) {
+			if (head_num + i > last_detail_schedule_num - 2) {
+				var d = leak_data['Phases'][i];
+				var item = {};
+				item['num'] = head_num + i;
+				item['start'] = new Date(Date.parse(d["StartDateTime"]+"+00:00")).getTime() / 1000;
+				item['end'] = new Date(Date.parse(d["EndDateTime"]+"+00:00")).getTime() / 1000;
+				item['stage'] = d['StageID'] - 5000 + 1;
+				item['stage_ja'] = stage_words[item['stage']]['ja'];
+				item['w1'] = d['WeaponSets'][0];
+				item['w2'] = d['WeaponSets'][1];
+				item['w3'] = d['WeaponSets'][2];
+				item['w4'] = d['WeaponSets'][3];
+				item['rare'] = (item['w4'] === -1) ? d['RareWeaponID'] - 20000 + 7000 : 0;
+				leak_schedules.push(item);
+			}
+		}
+		schedule_array = [];
+		for (var i = 0; i < last_detail_schedule_num - 2; i++) {
+			official_schedules[i]['rare'] = 0;
+			official_schedules[i]['stage_ja_short'] = stage_words[ official_schedules[i]['stage'] ]['ja_short'];
+			official_schedules[i]['duration'] = parseInt((official_schedules[i]['end'] - official_schedules[i]['start']) / 60 / 60);
+			schedule_array.push(official_schedules[i]);
+		}
+		for (var i = 0; i < leak_schedules.length; i++) {
+			schedule_array.push(leak_schedules[i]);
+		}
+		for (var i = last_detail_schedule_index - 1; i < schedule_array.length; i++) {
+			var scd = schedule_array[i];
+			var html = '' + base_html;
+			var start_format = 'M/d (D) HH:mm';
+			var end_format = 'M/d (D) HH:mm';
+			html = replace_with_schedule_data(html, scd, start_format, end_format);
+			var $html = $(html);
+			$('#rotations').append($html);
+		}
+		//console.log(official_schedules);
+		//console.log(leak_schedules);
+	});
+});
+
+/** get_date_str(unix, format)
+ */
+function get_date_str(unix, format) {
+	var date = new Date(unix * 1000);
+	var y = date.getFullYear();
+	var M = date.getMonth() + 1;
+	var d = date.getDate();
+	var H = date.getHours();
+	var m = date.getMinutes();
+	var s = date.getSeconds();
+	var D = date.getDay();
+	var D_ja = ['日', '月', '火', '水', '木', '金', '土'][D];
+	format = format.replace(/y+/g, function(match) {
+		return zero_pad(y, match.length);
+	});
+	format = format.replace(/M+/g, function(match) {
+		return zero_pad(M, match.length);
+	});
+	format = format.replace(/d+/g, function(match) {
+		return zero_pad(d, match.length);
+	});
+	format = format.replace(/H+/g, function(match) {
+		return zero_pad(H, match.length);
+	});
+	format = format.replace(/m+/g, function(match) {
+		return zero_pad(m, match.length);
+	});
+	format = format.replace(/D+/g, function(match) {
+		return D_ja;
+	});
+	return format;
+	function zero_pad(num, len) {
+		var zero = '';
+		for (var i = 0; i < len; i++) {
+			zero += '0';
+		}
+		return (zero + num).slice(-Math.max(len, num.toFixed(0).length));
+	}
+}
+
+function replace_with_schedule_data(str, schedule, start_date_format, end_date_format) {
+	return str
+	.replace(/\{num\}/g, schedule.num)
+	.replace(/\{duration\}/g, schedule.duration)
+	.replace(/\{stage_id\}/g, schedule.stage)
+	.replace(/\{stage_ja\}/g, schedule.stage_ja)
+	.replace(/\{stage_ja_short\}/g, schedule.stage_ja_short)
+	.replace(/\{w1\}/g, schedule.w1)
+	.replace(/\{w2\}/g, schedule.w2)
+	.replace(/\{w3\}/g, schedule.w3)
+	.replace(/\{w4\}/g, schedule.w4)
+	.replace(/\{w1_ja\}/g, schedule.w1_ja)
+	.replace(/\{w2_ja\}/g, schedule.w2_ja)
+	.replace(/\{w3_ja\}/g, schedule.w3_ja)
+	.replace(/\{w4_ja\}/g, schedule.w4_ja)
+	.replace(/\{rare\}/g, schedule.rare)
+	.replace(/\{start_date\}/g, get_date_str(schedule.start, start_date_format))
+	.replace(/\{end_date\}/g, get_date_str(schedule.end, end_date_format));
+}
+
+</script>
+</body>
+</html>
+<!-- Julia was here -->
