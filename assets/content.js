@@ -132,6 +132,7 @@ function TextContent(opt) {
 		size: 200,
 		family: 'Splatoon1',
 		color: 'white',
+		weight: 'normal',
 		stroke_color: 'none',
 		stroke_width: 20,
 		shadow_color: 'none',
@@ -145,7 +146,7 @@ TextContent.prototype = Object.create(Content.prototype);
 TextContent.prototype.constructor = TextContent;
 TextContent.prototype.draw = function() {
 	var ctx = this.ctx;
-	ctx.font = this.size + 'px ' + this.family;
+	ctx.font = this.weight + ' ' + this.size + 'px ' + this.family;
 	ctx.textAlign = this.align;
 	ctx.textBaseline = this.baseline;
     if (this.shadow_color === 'none') {
