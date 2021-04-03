@@ -21,7 +21,8 @@ function CircleContent(opt) {
 		width: 500,
 		color: 'black',
 		stroke_color: 'none',
-		stroke_width: 20
+		stroke_width: 20,
+		align: '',
 	}, opt);
 }
 CircleContent.prototype = Object.create(Content.prototype);
@@ -31,8 +32,14 @@ CircleContent.prototype.draw = function() {
 		return;
 	}
 	var ctx = this.ctx;
-	var x = this.x + this.width / 2;
-	var y = this.y + this.width / 2;
+	var x, y;
+	if (this.align === 'center') {
+		x = this.x;
+		y = this.y;
+	} else {
+		x = this.x + this.width / 2;
+		y = this.y + this.width / 2;
+	}
 	var r = this.width / 2;
 	ctx.beginPath();
 	ctx.arc(x, y, r, 0 * Math.PI / 180, 360 * Math.PI / 180, false);
@@ -60,7 +67,8 @@ function RectContent(opt) {
 		radius: 0,
 		color: 'black',
 		stroke_color: 'none',
-		stroke_width: 20
+		stroke_width: 20,
+		align: '',
 	}, opt);
 }
 RectContent.prototype = Object.create(Content.prototype);
@@ -70,6 +78,10 @@ RectContent.prototype.draw = function() {
 		return;
 	}
 	var ctx = this.ctx;
+	ctx.save();
+	if (this.align === 'center') {
+		ctx.translate(-this.width/2, -this.height/2);
+	}
 	if (this.color !== 'none') {
 		ctx.fillStyle = this.color;
 		if (this.radius) {
@@ -87,6 +99,7 @@ RectContent.prototype.draw = function() {
 			ctx.strokeRect(this.x, this.y, this.width, this.height);
 		}
 	}
+	ctx.restore();
 };
 
 /** DottedLineContent(opt)
@@ -331,6 +344,43 @@ StageContent.prototype = Object.create(Content.prototype);
 StageContent.prototype.constructor = StageContent;
 StageContent.prototype.draw = ImageContent.prototype.draw;
 
+/** WeaponContent(opt)
+ */
+function WeaponContent(opt) {
+	Content.call(this, opt);
+	$.extend(this, {
+		x: 0,
+		y: 0,
+		id: 0,
+		width: 300,
+		color: 'none',
+		stroke_color: 'none',
+		stroke_width: 20,
+		align: '',
+	}, opt);
+	var self = this;
+	this.img = new Image();
+	this.img.onload = function() {
+		if (self.canvas && self.canvas.update) {
+			self.canvas.update();
+		}
+	}
+	this.img.src = './assets/img/weapon-big/' + this.id + '.png';
+}
+WeaponContent.prototype = Object.create(Content.prototype);
+WeaponContent.prototype.constructor = WeaponListContent;
+WeaponContent.prototype.draw = function() {
+	if (!is_image_loaded(this.img)) {
+		return;
+	}
+	CircleContent.prototype.draw.call(this);
+	if (this.align === 'center') {
+		this.ctx.drawImage(this.img, this.x - this.width/2, this.y - this.width/2, this.width, this.width);
+	} else {
+		this.ctx.drawImage(this.img, this.x, this.y, this.width, this.width);
+	}
+};
+
 /** WeaponListContent(opt)
  */
 function WeaponListContent(opt) {
@@ -347,6 +397,7 @@ function WeaponListContent(opt) {
 		color: 'none',
 		stroke_color: 'none',
 		stroke_width: 20,
+		align: ''
 	}, opt);
 	var self = this;
 	this.imgs = [];
@@ -372,6 +423,14 @@ WeaponListContent.prototype.draw = function() {
 	}
 	var ctx = this.ctx;
 	var x = this.x;
+	var align = this.align;
+	this.align = '';
+	ctx.save();
+	if (align === 'center') {
+		var width = this.width * 4 + this.margin * 3;
+		var height = this.width;
+		ctx.translate(-width/2, -height/2);
+	}
 	this.x = x + 0 * (this.width + this.margin);
 	CircleContent.prototype.draw.call(this);
 	this.x = x + 1 * (this.width + this.margin);
@@ -385,15 +444,17 @@ WeaponListContent.prototype.draw = function() {
 	ctx.drawImage(this.imgs[1], this.x + (this.width + this.margin) * 1, this.y, this.width, this.width);
 	ctx.drawImage(this.imgs[2], this.x + (this.width + this.margin) * 2, this.y, this.width, this.width);
 	ctx.drawImage(this.imgs[3], this.x + (this.width + this.margin) * 3, this.y, this.width, this.width);
+	ctx.restore();
+	this.align = align;
 };
 
-function is_image_loade(img) {
+function is_image_loaded(img) {
 	return !!img.naturalWidth;
 }
 
 function is_all_image_loaded() {
 	for (var i = 0; i < arguments.length; i++) {
-		if (!is_image_loade(arguments[i])) {
+		if (!is_image_loaded(arguments[i])) {
 			return false;
 		}
 	}

@@ -35,7 +35,7 @@ body {
 }
 h1 {
 	text-align: center;
-	font-weight: bold;
+	font-weight: normal;
 	font-family: Splatoon1;
 	font-size: 64px;
 }
@@ -43,7 +43,7 @@ h2 {
 	margin-top: 60px;
 	margin-bottom: 10px;
 	text-align: center;
-	font-weight: bold;
+	font-weight: normal;
 	font-family: Splatoon1;
 	font-size: 32px;
 }
@@ -55,10 +55,15 @@ h3 {
 	font-family: "Arial", sans-serif;
 	color: rgb(225, 90, 125);
 }
+.example-title {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
 .text-block {
 	max-width: 800px;
 	margin-left: auto;
 	margin-right: auto; 
+	margin-bottom: 60px;
 }
 ol {
 	list-style-type: disc;
@@ -72,7 +77,7 @@ a {
 }
 table {
 	margin-top: 20px;
-	margin-bottom: 80px;
+	margin-bottom: 20px;
 	border-collapse: collapse;
 	width: 100%;
 }
@@ -152,16 +157,18 @@ td:nth-child(3) {
 		border-bottom: 20px solid transparent;
 		border-left: 30px solid transparent;
 	}
+/** #thumb-wrapper */
 #thumb-wrapper {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
 	margin-top: -10px;
 }
+	#thumb-wrapper .add-button,
 	#thumb-wrapper canvas {
 		width: 250px;
 		height: 140px;
-		margin: 20px;
+		margin: 5px 5px 0;
 		transition: all 500ms ease;
 		box-sizing: border-box;
 		cursor: pointer;
@@ -170,12 +177,38 @@ td:nth-child(3) {
 		background-size: 29px 29px;
 		background-repeat: repeat;
 	}
-	#thumb-wrapper canvas.selected {
-		border: 5px solid rgb(155, 155, 155);
-	}
 	#thumb-wrapper canvas:hover {
 		filter: brightness(1.15);
 	}
+	#thumb-wrapper .add-button {
+		width: 244px;
+		height: 134px;
+		background: #1e1e1e;
+		border: 1px solid white;
+		text-align: center;
+		margin: 22px;
+		color: white;
+		line-height: 140px;
+		user-select: none;
+		font-size: 40px;
+		font-weight: bold;
+		box-sizing: border-box;
+	}	
+	#thumb-wrapper .add-button:hover {
+		background: #2e2e2e;
+	}
+	#thumb-wrapper div {
+		border: none;
+		margin: 15px;
+	}
+	#thumb-wrapper p {
+		font-size: 14px;
+		text-align: center;
+	}
+	#thumb-wrapper canvas.selected {
+		border: 5px solid rgb(155, 155, 155);
+	}
+/** #script-wrapper */
 #script-wrapper {
 	width: 100%;
 	background-color: rgb(45, 42, 46);
@@ -190,13 +223,17 @@ td:nth-child(3) {
 		height: 60px;
 		line-height: 50px;
 	}
+		
+		#delete-script,
 		#set-default-script {
 			display: inline-block;
 			cursor: pointer;
 			text-align: center;
 			line-height: 30px;
 			height: 30px;
-			width: 170px;
+			width: auto;
+			padding: 0 20px;
+			margin: 0 10px;
 			font-size: 16px;
 			background-color: rgb(63, 81, 181);
 			color: rgb(245, 245, 245);
@@ -439,6 +476,7 @@ td:nth-child(3) {
 	.format-button {
 		display: inline-block;
 		cursor: pointer;
+		margin: 0 10px;
 		text-align: center;
 		line-height: 30px;
 		height: 30px;
@@ -454,4 +492,55 @@ td:nth-child(3) {
 	.format-button {
 		background-color: rgb(33, 121, 243);
 	}
+	.format-button:hover {
+		background-color: rgb(33, 121, 243);
+	}
+#main.blur {
+	filter: blur(8px);
+}
+.motal-outer {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .4);
+}
+	.motal-inner {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		width: max-content;
+		height: max-content;
+	}
+		.motal-inner p {
+			text-align: center;
+		}
+		.motal-button {
+			cursor: pointer;
+			margin: 30px auto;
+			text-align: center;
+			line-height: 30px;
+			padding: 10px;
+			width: 200px;
+			font-size: 20px;
+			background-color: rgb(63, 81, 181);
+			color: rgb(245, 245, 245);
+			transition: all 500ms ease;
+			font-family: "Verdana", "Helvetica", "Arial", sans-serif;
+			border-radius: 4px;
+			user-select: none;
+		}
+		.motal-button:hover {
+			background-color: rgb(33, 121, 243);
+		}
+		.motal-button.cancel {
+			background-color: #e91e63;
+		}
+		.motal-button.cancel:hover {
+			background-color: #e91ea1;
+		}
 

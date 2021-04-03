@@ -1,5 +1,5 @@
-window.default_scripts = [];
-window.current_scripts = [];
+var default_scripts = [];
+var current_scripts = [];
 
 default_scripts[0] =
 'set_date_format start="y/M/d (D) HH:mm" end="M/d (D) HH:mm"\n'+

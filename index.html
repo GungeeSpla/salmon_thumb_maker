@@ -10,12 +10,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 	<!-- ライブラリここまで -->
-	<script  src="./assets/extend.js?v1.6"></script>
-	<script    src="./assets/word.js?v1.6"></script>
-	<script src="./assets/content.js?v1.6"></script>
-	<script  src="./assets/script.js?v1.6"></script>
-	<script    src="./assets/main.js?v1.6"></script>
-	<link   href="./assets/style.css?v1.6" rel="stylesheet">
+	<script  src="./assets/extend.js?v1.7"></script>
+	<script    src="./assets/word.js?v1.7"></script>
+	<script src="./assets/content.js?v1.7"></script>
+	<script  src="./assets/script.js?v1.7"></script>
+	<script    src="./assets/main.js?v1.7"></script>
+	<link   href="./assets/style.css?v1.7" rel="stylesheet">
 	<meta name="twitter:card"        content="summary_large_image" />
 	<meta name="twitter:site"        content="@GungeeSpla" />
 	<meta name="twitter:title"       content="サーモンラン配信サムネイルメーカー" />
@@ -24,7 +24,8 @@
 	<link rel="icon" type="image/png" href="./assets/img/twitter-card.png">
 </head>
 <body>
-<h1>サーモンラン配信サムネイルメーカー v1.6</h1>
+<div id="main">
+<h1>サーモンラン配信サムネイルメーカー v1.7</h1>
 <h2>スケジュールの選択</h2>
 <div id="rotation-wrapper">
 	<div style="display: inline-block;">
@@ -40,9 +41,9 @@
 </div>
 <h2>スクリプトの編集</h2>
 <div id="script-wrapper">
-	<div class="script-title"><div id="set-default-script">デフォルトに戻す</div></div>
+	<div class="script-title"><div id="set-default-script">デフォルトに戻す</div><div id="delete-script">テンプレートを削除する</div></div>
 	<div id="script-area">
-		<div id="script" contenteditable="true"></div>
+		<div id="script" contenteditable="true" spellcheck="false"></div>
 	</div>
 </div>
 <div id="canvas-wrapper">
@@ -91,6 +92,7 @@
 		<li>スクリプトは基本的に半角英数で入力してください。タグ・パラメータ・スペース・イコール・クォーテーションなどが全角で入力されている場合、正常に動作しません。</li>
 		<li>スクリプトの各行は次のような構造になっています。<br><span class="hl-tag-name">タグ名</span> <span class="hl-param-name">パラメータの名前1</span>="<span class="hl-param-value">値1</span>" <span class="hl-param-name">パラメータの名前2</span>="<span class="hl-param-value">値2</span>"</li>
 		<li>まず要素の種類を決める「タグ」を書き、その後ろに「名前="値"」で一組になった「パラメータ」を書いていきます。タグとパラメータの間、パラメータとパラメータの間には半角スペースを入れてください。</li>
+		<li>行の先頭に「#」（半角のナンバー）を付けるとコメントアウトできます。</li>
 	</ol>
 </div>
 <h2>タグとパラメータについて</h2>
@@ -107,6 +109,7 @@
 	color        | black  | 四角形の塗りつぶしの色を指定します。形式は「white」「#ffffff」「rgb(255, 255, 255)」「rgba(255, 255, 255, 1)」など。「none」で透明になります。色の指定に使用可能な形式について、詳しくは&lt;a href="https://gray-code.com/html_css/about-color-specify-of-css/" target="_blank">こちら&lt;/a>を見てください。
 	stroke_color | none   | 四角形の線の色を指定します。
 	stroke_width | 2      | 四角形の枠線の太さをpx単位で指定します。
+	align        |        | centerを指定すると座標の基準が四角形の中央になります。
 	</p>
 </div>
 <div class="text-block normal-param">
@@ -188,6 +191,21 @@
 	</p>
 </div>
 <div class="text-block normal-param">
+	<h3>weapon</h3>
+	<p>ブキの画像を描くタグです。</p>
+	<p class="parse-table">
+	パラメータ名  | 初期値   | 説明
+	x             | 0        | 画像のx座標をpx単位で指定します。
+	y             | 0        | 画像のy座標をpx単位で指定します。
+	id            | 0        | ブキのIDを指定します。ブキのIDは<a href="https://splamp.info/salmon/api/#e" target="_blank">スプランプ</a>さんの「参考：ブキデータ対応表」で調べることができます。また、7000=クマブラ、7010=クマシェル、7020=クマチャー、7030=クマスロ、となっています。
+	width         | 300      | 各ブキの画像の横幅をpx単位で指定します。
+	color         | none     | 背景の円の塗りつぶしの色を指定します。
+	stroke_color  | none     | 背景の円の線の色を指定します。
+	stroke_width  | 2        | 背景の円の枠線の太さをpx単位で指定します。
+	align         |          | centerを指定すると座標の基準が画像中央になります。
+	</p>
+</div>
+<div class="text-block normal-param">
 	<h3>weapon_list</h3>
 	<p>ブキ4個を並べた画像を描くタグです。</p>
 	<p class="parse-table">
@@ -199,6 +217,7 @@
 	color         | none     | 背景の円の塗りつぶしの色を指定します。
 	stroke_color  | none     | 背景の円の線の色を指定します。
 	stroke_width  | 2        | 背景の円の枠線の太さをpx単位で指定します。
+	align         |          | centerを指定すると座標の基準が画像中央になります。
 	</p>
 </div>
 <div class="text-block normal-param">
@@ -208,6 +227,18 @@
 	パラメータ名  | 初期値    | 説明
 	start         | M/d HH:mm | スケジュールの始まる時間のフォーマットを指定します。たとえば「y.M.d (D) HH:mm」と指定すると、「2020.9.25 (金) 03:00」のような表記になります。
 	end           | M/d HH:mm | スケジュールの終わる時間のフォーマットを指定します。
+	</p>
+</div>
+<div class="text-block normal-param">
+	<h3>set_var</h3>
+	<p>これは何かを描くタグではありません。変数に値をセットするための特殊なタグです。ひとつのタグで複数の変数に値をセットすることができます。このタグで値をセットしておいた変数は、それ以降のタグのパラメータ内で{変数名}という形で呼び出すことができます。</p>
+	<p class="parse-table">
+	パラメータ名  | 初期値    | 説明
+	任意の変数名  |           | 任意の変数に値をセットします。
+	</p>
+	<p class="example">
+	set_var hoge_number="200" hoge_text="ほげほげ" hoge_color="Yellow"
+	text text="変数の値は{hoge_text}です" size="{hoge_number}" color="{hoge_color}"
 	</p>
 </div>
 <h2>特殊なパラメータの値</h2>
@@ -231,6 +262,17 @@
 	{w3_ja}          | ブキ3の日本語の正式名称。
 	{w4_ja}          | ブキ4の日本語の正式名称。
 	</p>
+</div>
+</div>
+<div class="motal-outer" style="display: none;">
+	<div class="motal-inner">
+		<p>デフォルトのテンプレートを選択してください。</p>
+		<div class="motal-button select" index="0">デフォルト1</div>
+		<div class="motal-button select" index="1">デフォルト2</div>
+		<div class="motal-button select" index="2">デフォルト3</div>
+		<div class="motal-button select" index="3">デフォルト4</div>
+		<div class="motal-button cancel">キャンセル</div>
+	</div>
 </div>
 </body>
 </html>
