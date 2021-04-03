@@ -5,30 +5,35 @@ var stage_words = {
 		"id": "1",
 		"ja": "シェケナダム",
 		"ja_short": "シェケナダム",
+		"en_short": "Grounds",
 		"en": "Spawning Grounds"
 	},
 	"2": {
 		"id": "2",
 		"ja": "難破船ドン･ブラコ",
 		"ja_short": "ドンブラコ",
+		"en_short": "Bay",
 		"en": "Marooner's Bay"
 	},
 	"3": {
 		"id": "3",
 		"ja": "海上集落シャケト場",
 		"ja_short": "シャケト場",
+		"en_short": "Outpost",
 		"en": "Lost Outpost"
 	},
 	"4": {
 		"id": "4",
 		"ja": "トキシラズいぶし工房",
 		"ja_short": "トキシラズ",
+		"en_short": "Yard",
 		"en": "Salmonid Smokeyard"
 	},
 	"5": {
 		"id": "5",
 		"ja": "朽ちた箱舟 ポラリス",
 		"ja_short": "ポラリス",
+		"en_short": "Ark",
 		"en": "Ruins of Ark Polaris"
 	}
 };

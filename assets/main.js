@@ -725,6 +725,7 @@ function get_schedule(callback) {
 			schedule_array = [];
 			for (var i = 0; i < last_detail_schedule_num; i++) {
 				official_schedules[i]['stage_ja_short'] = stage_words[ official_schedules[i]['stage'] ]['ja_short'];
+				official_schedules[i]['stage_en_short'] = stage_words[ official_schedules[i]['stage'] ]['en_short'];
 				official_schedules[i]['duration'] = parseInt((official_schedules[i]['end'] - official_schedules[i]['start']) / 60 / 60);
 				schedule_array.push(official_schedules[i]);
 			}
@@ -840,6 +841,8 @@ function replace_with_schedule_data(str, start_date_format, end_date_format) {
 	.replace(/\{stage_id\}/g, schedule_array[current_schedule_index].stage)
 	.replace(/\{stage_ja\}/g, schedule_array[current_schedule_index].stage_ja)
 	.replace(/\{stage_ja_short\}/g, schedule_array[current_schedule_index].stage_ja_short)
+	.replace(/\{stage_en\}/g, schedule_array[current_schedule_index].stage_en)
+	.replace(/\{stage_en_short\}/g, schedule_array[current_schedule_index].stage_en_short)
 	.replace(/\{w1\}/g, schedule_array[current_schedule_index].w1)
 	.replace(/\{w2\}/g, schedule_array[current_schedule_index].w2)
 	.replace(/\{w3\}/g, schedule_array[current_schedule_index].w3)
@@ -848,6 +851,10 @@ function replace_with_schedule_data(str, start_date_format, end_date_format) {
 	.replace(/\{w2_ja\}/g, schedule_array[current_schedule_index].w2_ja)
 	.replace(/\{w3_ja\}/g, schedule_array[current_schedule_index].w3_ja)
 	.replace(/\{w4_ja\}/g, schedule_array[current_schedule_index].w4_ja)
+	.replace(/\{w1_en\}/g, schedule_array[current_schedule_index].w1_en)
+	.replace(/\{w2_en\}/g, schedule_array[current_schedule_index].w2_en)
+	.replace(/\{w3_en\}/g, schedule_array[current_schedule_index].w3_en)
+	.replace(/\{w4_en\}/g, schedule_array[current_schedule_index].w4_en)
 	.replace(/\{start_date\}/g, get_date_str(schedule_array[current_schedule_index].start, start_date_format))
 	.replace(/\{end_date\}/g, get_date_str(schedule_array[current_schedule_index].end, end_date_format));
 }
